@@ -1,0 +1,508 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Bricolage Grotesque";
+  src: url("/assets/fonts/BricolageGrotesque.woff2") format("woff2");
+  font-weight: 200 800;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Figtree";
+  src: url("/assets/fonts/Figtree.woff2") format("woff2");
+  font-weight: 300 900;
+  font-display: swap;
+}
+
+@layer base {
+  :root {
+    --radius: 0.75rem;
+
+    /* Light mode — soft lavender + deep violet */
+    --background: 0.97 0.005 280;
+    --foreground: 0.18 0.03 280;
+    --card: 1 0 0;
+    --card-foreground: 0.18 0.03 280;
+    --popover: 1 0 0;
+    --popover-foreground: 0.18 0.03 280;
+    --primary: 0.52 0.22 285;
+    --primary-foreground: 0.98 0 0;
+    --secondary: 0.93 0.04 275;
+    --secondary-foreground: 0.3 0.12 280;
+    --muted: 0.93 0.015 275;
+    --muted-foreground: 0.5 0.05 280;
+    --accent: 0.88 0.08 265;
+    --accent-foreground: 0.25 0.15 280;
+    --destructive: 0.577 0.245 27.325;
+    --destructive-foreground: 0.985 0 0;
+    --border: 0.88 0.04 275;
+    --input: 0.88 0.04 275;
+    --ring: 0.52 0.22 285;
+
+    --grad-start: oklch(0.52 0.22 285);
+    --grad-mid: oklch(0.45 0.2 250);
+    --grad-end: oklch(0.4 0.18 225);
+
+    --chart-1: 0.646 0.222 285;
+    --chart-2: 0.6 0.18 250;
+    --chart-3: 0.5 0.15 225;
+    --chart-4: 0.7 0.18 300;
+    --chart-5: 0.55 0.2 265;
+    --sidebar: 0.985 0 0;
+    --sidebar-foreground: 0.145 0 0;
+    --sidebar-primary: 0.52 0.22 285;
+    --sidebar-primary-foreground: 0.985 0 0;
+    --sidebar-accent: 0.93 0.04 275;
+    --sidebar-accent-foreground: 0.3 0.12 280;
+    --sidebar-border: 0.88 0.04 275;
+    --sidebar-ring: 0.52 0.22 285;
+  }
+
+  .dark {
+    /* Dark mode — deep void with glowing violet-blue */
+    --background: 0.08 0.02 260;
+    --foreground: 0.97 0.005 280;
+    --card: 0.12 0.035 265;
+    --card-foreground: 0.95 0.01 280;
+    --popover: 0.14 0.03 265;
+    --popover-foreground: 0.95 0.01 280;
+    --primary: 0.72 0.28 285;
+    --primary-foreground: 0.1 0.02 280;
+    --secondary: 0.18 0.06 270;
+    --secondary-foreground: 0.9 0.02 280;
+    --muted: 0.16 0.035 268;
+    --muted-foreground: 0.65 0.09 275;
+    --accent: 0.22 0.1 265;
+    --accent-foreground: 0.95 0.01 280;
+    --destructive: 0.704 0.191 22.216;
+    --destructive-foreground: 0.205 0 0;
+    --border: 0.72 0.28 285 / 15%;
+    --input: 1 0 0 / 12%;
+    --ring: 0.72 0.28 285;
+
+    --grad-start: oklch(0.72 0.28 285);
+    --grad-mid: oklch(0.62 0.28 315);
+    --grad-end: oklch(0.55 0.25 230);
+
+    --chart-1: 0.65 0.24 285;
+    --chart-2: 0.55 0.22 250;
+    --chart-3: 0.48 0.18 225;
+    --chart-4: 0.7 0.2 300;
+    --chart-5: 0.6 0.22 265;
+    --sidebar: 0.14 0.03 265;
+    --sidebar-foreground: 0.95 0.01 280;
+    --sidebar-primary: 0.65 0.24 285;
+    --sidebar-primary-foreground: 0.1 0.02 280;
+    --sidebar-accent: 0.2 0.05 270;
+    --sidebar-accent-foreground: 0.9 0.02 280;
+    --sidebar-border: 1 0 0 / 10%;
+    --sidebar-ring: 0.65 0.24 285;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Figtree", system-ui, sans-serif;
+  }
+}
+
+@layer utilities {
+  .grad-text {
+    background: linear-gradient(
+      135deg,
+      var(--grad-start),
+      var(--grad-mid),
+      var(--grad-end)
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .grad-border {
+    position: relative;
+  }
+  .grad-border::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, var(--grad-start), var(--grad-end));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+
+  .glow {
+    box-shadow: 0 0 40px oklch(0.72 0.28 285 / 0.2), 0 0 80px
+      oklch(0.62 0.28 315 / 0.1);
+  }
+
+  .glow-text {
+    text-shadow: 0 0 40px oklch(0.72 0.28 285 / 0.7);
+  }
+
+  /* Section heading subtle glow pulse */
+  .heading-glow {
+    animation: heading-glow-pulse 4s ease-in-out infinite;
+  }
+
+  /* Name shimmer sweep */
+  .name-shimmer {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+  }
+  .name-shimmer::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(0.9 0.22 285 / 0.5),
+      transparent
+    );
+    animation: shimmer 4s ease-in-out infinite;
+    animation-delay: 1.2s;
+  }
+
+  /* Active nav link shimmer */
+  .nav-link-active {
+    position: relative;
+    overflow: hidden;
+  }
+  .nav-link-active::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      oklch(0.72 0.28 285 / 0.25),
+      transparent
+    );
+    animation: shimmer 2.5s ease-in-out infinite;
+  }
+
+  /* Heading underline expand */
+  .heading-underline {
+    width: 0;
+    transition: width 0.9s cubic-bezier(0.4, 0, 0.2, 1) 0.4s;
+    height: 0.25rem;
+    border-radius: 9999px;
+    background: linear-gradient(to right, var(--grad-start), var(--grad-mid));
+  }
+  .reveal.visible .heading-underline {
+    width: 5rem;
+  }
+
+  /* Alternate timeline slide animations */
+  .reveal-from-left {
+    opacity: 0;
+    transform: translateX(-40px);
+    transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal-from-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .reveal-from-right {
+    opacity: 0;
+    transform: translateX(40px);
+    transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .reveal-from-right.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* ─── Keyframes ─────────────────────────────── */
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Left-to-right shine sweep */
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  60%,
+  100% {
+    left: 150%;
+  }
+}
+
+/* Floating particle glow */
+@keyframes float-particle {
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.4;
+  }
+  33% {
+    transform: translateY(-18px) scale(1.15);
+    opacity: 0.7;
+  }
+  66% {
+    transform: translateY(-8px) scale(0.9);
+    opacity: 0.5;
+  }
+}
+
+/* Underline width expand (standalone animation for non-scroll use) */
+@keyframes expand-width {
+  from {
+    width: 0;
+  }
+  to {
+    width: 5rem;
+  }
+}
+
+/* Orb drift animations */
+@keyframes orb-drift-1 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  25% {
+    transform: translate(40px, -30px) scale(1.05);
+  }
+  50% {
+    transform: translate(20px, 50px) scale(0.95);
+  }
+  75% {
+    transform: translate(-30px, 20px) scale(1.08);
+  }
+}
+
+@keyframes orb-drift-2 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  30% {
+    transform: translate(-50px, 30px) scale(1.1);
+  }
+  60% {
+    transform: translate(30px, -40px) scale(0.9);
+  }
+  80% {
+    transform: translate(50px, 10px) scale(1.05);
+  }
+}
+
+@keyframes orb-drift-3 {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  40% {
+    transform: translate(60px, -20px) scale(1.12);
+  }
+  70% {
+    transform: translate(-20px, 60px) scale(0.88);
+  }
+}
+
+/* Spinning gradient ring around avatar */
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Pulse ring for avatar glow */
+@keyframes pulse-ring {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1.18);
+  }
+  50% {
+    opacity: 0.7;
+    transform: scale(1.25);
+  }
+}
+
+/* Heading glow pulse */
+@keyframes heading-glow-pulse {
+  0%,
+  100% {
+    filter: drop-shadow(0 0 0px transparent);
+  }
+  50% {
+    filter: drop-shadow(0 0 14px oklch(0.72 0.28 285 / 0.7));
+  }
+}
+
+/* ─── Animation helpers ─────────────────────── */
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.8s ease-out forwards;
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+.animate-float-particle {
+  animation: float-particle ease-in-out infinite;
+}
+
+.orb-drift-1 {
+  animation: orb-drift-1 18s ease-in-out infinite;
+}
+
+.orb-drift-2 {
+  animation: orb-drift-2 22s ease-in-out infinite;
+}
+
+.orb-drift-3 {
+  animation: orb-drift-3 16s ease-in-out infinite;
+}
+
+.animate-spin-slow {
+  animation: spin-slow 6s linear infinite;
+}
+
+.animate-pulse-ring {
+  animation: pulse-ring 3s ease-in-out infinite;
+}
+
+/* ─── Scroll reveal ─────────────────────────── */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.75s ease, transform 0.75s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 {
+  transition-delay: 0.1s;
+}
+.reveal-delay-2 {
+  transition-delay: 0.2s;
+}
+.reveal-delay-3 {
+  transition-delay: 0.3s;
+}
+.reveal-delay-4 {
+  transition-delay: 0.4s;
+}
+.reveal-delay-5 {
+  transition-delay: 0.5s;
+}
+
+/* shadow-glow utilities (used inline via style but kept for reference) */
+.shadow-glow {
+  box-shadow: 0 0 24px oklch(0.72 0.28 285 / 0.25), 0 0 48px
+    oklch(0.62 0.28 315 / 0.12);
+}
+
+.shadow-glow-sm {
+  box-shadow: 0 0 18px oklch(0.72 0.28 285 / 0.3);
+}
+
+.shadow-glow-lg {
+  box-shadow: 0 0 36px oklch(0.72 0.28 285 / 0.35), 0 0 72px
+    oklch(0.62 0.28 315 / 0.18);
+}
+
+@keyframes blink-cursor {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
