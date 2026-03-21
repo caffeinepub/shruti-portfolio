@@ -1,3 +1,4 @@
+import { CinematicIntro } from "@/components/CinematicIntro";
 import { LoadingOverlay } from "@/components/LoadingOverlay";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -1280,152 +1281,48 @@ function Certifications() {
 }
 
 function Contact() {
-  const [form, setForm] = useState({ name: "", email: "", message: "" });
-  const [sent, setSent] = useState(false);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setSent(true);
-    setForm({ name: "", email: "", message: "" });
-    setTimeout(() => setSent(false), 4000);
-  };
-
   return (
     <section id="contact" className="py-24 sm:py-32">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <SectionHeading icon={<Mail className="w-5 h-5" />} label="Contact" />
 
-        <div className="mt-16 grid lg:grid-cols-2 gap-16">
-          {/* Info */}
-          <div className="reveal space-y-8">
-            <div>
-              <h3 className="font-display font-bold text-2xl text-foreground mb-4">
-                Let's build something great together.
-              </h3>
-              <p className="text-muted-foreground leading-relaxed">
-                Whether it's a job opportunity, collaboration on an exciting
-                project, or just a chat about technology — my inbox is always
-                open. I'll try to respond within 24 hours.
-              </p>
-            </div>
+        <div className="mt-16 flex flex-col items-center text-center reveal">
+          <h3 className="font-display font-bold text-3xl text-foreground mb-12">
+            Get in Touch
+          </h3>
 
-            <div className="space-y-4">
-              {[
-                {
-                  icon: <Mail className="w-5 h-5" />,
-                  label: "Email",
-                  value: "shrutisreetadepalli@gmail.com",
-                  href: "mailto:shrutisreetadepalli@gmail.com",
-                },
-                {
-                  icon: <Linkedin className="w-5 h-5" />,
-                  label: "LinkedIn",
-                  value: "linkedin.com/in/shrutisree-tadepalli",
-                  href: "https://www.linkedin.com/in/shrutisree-tadepalli-6a3163362?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app",
-                },
-              ].map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 rounded-xl border border-border bg-card hover:border-primary/40 hover:bg-primary/5 hover:scale-[1.02] hover:shadow-[0_0_18px_4px_rgba(139,92,246,0.5)] transition-all duration-200 group"
-                  data-ocid="contact.link"
-                >
-                  <div className="p-2.5 rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
-                    {item.icon}
-                  </div>
-                  <div>
-                    <p className="text-xs text-muted-foreground">
-                      {item.label}
-                    </p>
-                    <p className="text-sm font-medium text-foreground">
-                      {item.value}
-                    </p>
-                  </div>
-                </a>
-              ))}
-            </div>
-          </div>
+          <div className="flex flex-col sm:flex-row gap-6">
+            <a
+              href="mailto:shrutisreetadepalli@gmail.com"
+              className="flex items-center gap-4 p-5 rounded-2xl border border-border bg-card hover:border-primary/40 hover:bg-primary/5 hover:scale-[1.04] hover:shadow-[0_0_24px_6px_rgba(139,92,246,0.5)] transition-all duration-200 group min-w-[220px]"
+            >
+              <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
+                <Mail className="w-6 h-6" />
+              </div>
+              <div className="text-left">
+                <p className="text-xs text-muted-foreground">Email</p>
+                <p className="text-sm font-medium text-foreground">
+                  shrutisreetadepalli@gmail.com
+                </p>
+              </div>
+            </a>
 
-          {/* Form */}
-          <div className="reveal reveal-delay-2">
-            <Card className="grad-border bg-card">
-              <CardContent className="p-8">
-                {sent ? (
-                  <div
-                    className="flex flex-col items-center justify-center py-12 text-center"
-                    data-ocid="contact.success_state"
-                  >
-                    <div className="text-5xl mb-4">🎉</div>
-                    <h3 className="font-display font-bold text-xl text-foreground mb-2">
-                      Message sent!
-                    </h3>
-                    <p className="text-muted-foreground text-sm">
-                      Thanks for reaching out. I'll get back to you soon.
-                    </p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="space-y-5">
-                    <div className="space-y-2">
-                      <Label htmlFor="contact-name">Name</Label>
-                      <Input
-                        id="contact-name"
-                        placeholder="Your name"
-                        value={form.name}
-                        onChange={(e) =>
-                          setForm((p) => ({ ...p, name: e.target.value }))
-                        }
-                        required
-                        data-ocid="contact.input"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="contact-email">Email</Label>
-                      <Input
-                        id="contact-email"
-                        type="email"
-                        placeholder="your@email.com"
-                        value={form.email}
-                        onChange={(e) =>
-                          setForm((p) => ({ ...p, email: e.target.value }))
-                        }
-                        required
-                        data-ocid="contact.input"
-                      />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="contact-message">Message</Label>
-                      <Textarea
-                        id="contact-message"
-                        placeholder="Tell me about your project or opportunity..."
-                        rows={5}
-                        value={form.message}
-                        onChange={(e) =>
-                          setForm((p) => ({ ...p, message: e.target.value }))
-                        }
-                        required
-                        data-ocid="contact.textarea"
-                      />
-                    </div>
-                    <Button
-                      type="submit"
-                      className="w-full font-semibold"
-                      style={{
-                        background:
-                          "linear-gradient(135deg, oklch(0.72 0.28 285), oklch(0.62 0.28 315))",
-                        color: "white",
-                        border: "none",
-                      }}
-                      data-ocid="contact.submit_button"
-                    >
-                      <Mail className="w-4 h-4 mr-2" />
-                      Send Message
-                    </Button>
-                  </form>
-                )}
-              </CardContent>
-            </Card>
+            <a
+              href="https://www.linkedin.com/in/shrutisree-tadepalli-6a3163362?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-4 p-5 rounded-2xl border border-border bg-card hover:border-primary/40 hover:bg-primary/5 hover:scale-[1.04] hover:shadow-[0_0_24px_6px_rgba(139,92,246,0.5)] transition-all duration-200 group min-w-[220px]"
+            >
+              <div className="p-3 rounded-xl bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
+                <Linkedin className="w-6 h-6" />
+              </div>
+              <div className="text-left">
+                <p className="text-xs text-muted-foreground">LinkedIn</p>
+                <p className="text-sm font-medium text-foreground">
+                  Connect with me
+                </p>
+              </div>
+            </a>
           </div>
         </div>
       </div>
@@ -1489,6 +1386,14 @@ function Footer() {
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
+  const [introComplete, setIntroComplete] = useState(
+    () => sessionStorage.getItem("introSeen") === "true",
+  );
+
+  const handleIntroComplete = () => {
+    sessionStorage.setItem("introSeen", "true");
+    setIntroComplete(true);
+  };
   const [dark, setDark] = useState(true);
 
   useEffect(() => {
@@ -1503,6 +1408,10 @@ export default function App() {
   const toggleDark = useCallback(() => setDark((d) => !d), []);
 
   useScrollReveal();
+
+  if (!introComplete) {
+    return <CinematicIntro onComplete={handleIntroComplete} />;
+  }
 
   return (
     <>
