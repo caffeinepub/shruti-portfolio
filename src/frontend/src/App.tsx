@@ -77,7 +77,7 @@ const EXPERIENCE = [
   {
     role: "Intern",
     company: "Evolve x",
-    duration: "2024 – Present",
+    duration: "2026 – Present",
     location: "India",
     type: "Internship",
     bullets: [
@@ -107,6 +107,7 @@ const HACKATHONS = [
       "An interactive and innovative experience where we explored unique ideas that truly expanded our thinking at NRCM College.",
     image:
       "https://pub-1407f82391df4ab1951418d04be76914.r2.dev/uploads/caf6aab2-249d-42f5-ae08-b581aa8667f4.jpg",
+    link: "https://drive.google.com/file/d/1LW7JvV7BmbCf1RpHKAUgANxl7ipf22GA/view",
   },
   {
     name: "Hackforge 2026 (48hrs)",
@@ -114,6 +115,7 @@ const HACKATHONS = [
       "A dynamic hackathon experience focused on creativity and problem-solving, where innovative ideas came to life at CMRIT College.",
     image:
       "https://media.licdn.com/dms/image/v2/D4D22AQF7sUWTCrQSdg/feedshare-shrink_2048_1536/B4DZzYctVjJQAg-/0/1773157932158?e=1775692800&v=beta&t=PkP_sYMuAI4pcAITHorMLAF9X7EP13Yy6sRsxcBy8JA",
+    link: "https://drive.google.com/file/d/1haSWZYJ0kGMXJd7NZB7lA03EEGrAAiAR/view",
   },
 ];
 
@@ -348,8 +350,8 @@ function Navbar({
         </button>
 
         {/* Desktop Links */}
-        <ul className="hidden lg:flex items-center gap-1">
-          {NAV_LINKS.slice(1).map((link) => {
+        <ul className="hidden md:flex items-center gap-0.5">
+          {NAV_LINKS.map((link) => {
             const sectionId = link.href.slice(1);
             const isActive = active === sectionId;
             return (
@@ -357,7 +359,7 @@ function Navbar({
                 <button
                   type="button"
                   onClick={() => handleNav(link.href)}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium transition-all duration-200 ${
+                  className={`px-2 py-1.5 rounded-md text-xs font-medium transition-all duration-200 ${
                     isActive
                       ? "bg-primary/20 text-primary nav-link-active"
                       : "text-muted-foreground hover:text-foreground hover:bg-accent"
@@ -393,18 +395,18 @@ function Navbar({
             {dark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
           </Button>
           <a
-            href="mailto:shrutisree@example.com"
-            className="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-full hover:bg-accent transition-colors"
+            href="mailto:shrutisreetadepalli@gmail.com"
+            className="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-full hover:bg-accent hover:shadow-[0_0_12px_3px_rgba(139,92,246,0.6)] transition-all duration-200"
             aria-label="Email"
             data-ocid="nav.link"
           >
             <Mail className="w-4 h-4" />
           </a>
           <a
-            href="https://linkedin.com"
+            href="https://www.linkedin.com/in/shrutisree-tadepalli-6a3163362?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
             target="_blank"
             rel="noopener noreferrer"
-            className="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-full hover:bg-accent transition-colors"
+            className="hidden sm:inline-flex items-center justify-center w-9 h-9 rounded-full hover:bg-accent hover:shadow-[0_0_12px_3px_rgba(139,92,246,0.6)] transition-all duration-200"
             aria-label="LinkedIn"
             data-ocid="nav.link"
           >
@@ -413,7 +415,7 @@ function Navbar({
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden rounded-full"
+            className="md:hidden rounded-full"
             onClick={() => setOpen(!open)}
             data-ocid="nav.toggle"
           >
@@ -424,7 +426,7 @@ function Navbar({
 
       {/* Mobile Menu */}
       {open && (
-        <div className="lg:hidden bg-background/95 backdrop-blur-xl border-b border-border">
+        <div className="md:hidden bg-background/95 backdrop-blur-xl border-b border-border">
           <ul className="max-w-7xl mx-auto px-4 py-4 space-y-1">
             {NAV_LINKS.map((link) => (
               <li key={link.href}>
@@ -1200,27 +1202,34 @@ function Hackathons() {
 
         <div className="mt-16 grid sm:grid-cols-2 gap-6">
           {HACKATHONS.map((h, i) => (
-            <Card
+            <a
               key={h.name}
-              className={`reveal reveal-delay-${(i % 2) + 1} grad-border bg-card hover:shadow-glow-lg hover:scale-[1.05] transition-all duration-300 overflow-hidden`}
-              data-ocid={`hackathons.item.${i + 1}`}
+              href={h.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block cursor-pointer"
             >
-              <div className="w-full h-48 overflow-hidden">
-                <img
-                  src={h.image}
-                  alt={h.name}
-                  className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
-                />
-              </div>
-              <CardContent className="p-6">
-                <h3 className="font-display font-bold text-base text-foreground mb-2">
-                  {h.name}
-                </h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {h.description}
-                </p>
-              </CardContent>
-            </Card>
+              <Card
+                className={`reveal reveal-delay-${(i % 2) + 1} grad-border bg-card hover:shadow-glow-lg hover:scale-[1.05] transition-all duration-300 overflow-hidden`}
+                data-ocid={`hackathons.item.${i + 1}`}
+              >
+                <div className="w-full h-48 overflow-hidden">
+                  <img
+                    src={h.image}
+                    alt={h.name}
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  />
+                </div>
+                <CardContent className="p-6">
+                  <h3 className="font-display font-bold text-base text-foreground mb-2">
+                    {h.name}
+                  </h3>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {h.description}
+                  </p>
+                </CardContent>
+              </Card>
+            </a>
           ))}
         </div>
       </div>
@@ -1305,8 +1314,8 @@ function Contact() {
                 {
                   icon: <Mail className="w-5 h-5" />,
                   label: "Email",
-                  value: "shrutithequeen5@gmail.com",
-                  href: "mailto:shrutithequeen5@gmail.com",
+                  value: "shrutisreetadepalli@gmail.com",
+                  href: "mailto:shrutisreetadepalli@gmail.com",
                 },
                 {
                   icon: <Linkedin className="w-5 h-5" />,
@@ -1320,7 +1329,7 @@ function Contact() {
                   href={item.href}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 p-4 rounded-xl border border-border bg-card hover:border-primary/40 hover:bg-primary/5 hover:scale-[1.02] transition-all duration-200 group"
+                  className="flex items-center gap-4 p-4 rounded-xl border border-border bg-card hover:border-primary/40 hover:bg-primary/5 hover:scale-[1.02] hover:shadow-[0_0_18px_4px_rgba(139,92,246,0.5)] transition-all duration-200 group"
                   data-ocid="contact.link"
                 >
                   <div className="p-2.5 rounded-lg bg-primary/10 text-primary group-hover:bg-primary/20 transition-colors">
