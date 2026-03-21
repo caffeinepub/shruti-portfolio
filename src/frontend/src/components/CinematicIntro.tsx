@@ -536,16 +536,22 @@ export function CinematicIntro({ onComplete }: CinematicIntroProps) {
                 willChange: "transform, filter",
               }}
             >
-              <img
-                src="/assets/uploads/Screenshot-2026-03-21-194344-1-2.png"
-                alt="Shrutisree"
+              <div
                 style={{
                   width: "100%",
                   height: "100%",
-                  objectFit: "cover",
-                  objectPosition: "center top",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  background:
+                    "linear-gradient(135deg, oklch(0.72 0.28 285), oklch(0.62 0.28 315))",
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "2.5rem",
                 }}
-              />
+              >
+                SST
+              </div>
             </div>
             {/* Ripple rings for snap */}
             {showRipples &&

@@ -334,12 +334,17 @@ function Navbar({
           data-ocid="nav.link"
         >
           <div className="relative">
-            <img
-              src="/assets/uploads/image-2-3.png"
-              alt="Shrutisree"
-              className="w-9 h-9 rounded-full object-cover ring-2 ring-primary/50 group-hover:ring-primary transition-all duration-300"
-              style={{ boxShadow: "0 0 12px oklch(0.72 0.28 285 / 0.4)" }}
-            />
+            <div
+              className="w-9 h-9 rounded-full ring-2 ring-primary/50 group-hover:ring-primary transition-all duration-300 flex items-center justify-center font-bold text-xs"
+              style={{
+                boxShadow: "0 0 12px oklch(0.72 0.28 285 / 0.4)",
+                background:
+                  "linear-gradient(135deg, oklch(0.72 0.28 285), oklch(0.62 0.28 315))",
+                color: "white",
+              }}
+            >
+              SST
+            </div>
             <span
               className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-background animate-pulse"
               style={{ background: "oklch(0.72 0.28 285)" }}
@@ -596,11 +601,16 @@ function Hero({ dark }: { dark: boolean }) {
                   "0 0 0 3px oklch(0.72 0.28 285 / 0.6), 0 0 40px oklch(0.72 0.28 285 / 0.35), 0 0 80px oklch(0.62 0.28 315 / 0.2)",
               }}
             >
-              <img
-                src="/assets/uploads/image-2-3.png"
-                alt="Shrutisree Tadepalli"
-                className="w-full h-full object-cover"
-              />
+              <div
+                className="w-full h-full flex items-center justify-center font-bold text-5xl"
+                style={{
+                  background:
+                    "linear-gradient(135deg, oklch(0.72 0.28 285), oklch(0.62 0.28 315))",
+                  color: "white",
+                }}
+              >
+                SST
+              </div>
             </div>
             {/* Sparkle decoration */}
             <div
@@ -740,11 +750,16 @@ function About() {
                     "0 0 40px oklch(0.72 0.28 285 / 0.2), 0 0 80px oklch(0.62 0.28 315 / 0.1)",
                 }}
               >
-                <img
-                  src="/assets/uploads/image-2-3.png"
-                  alt="Shrutisree Tadepalli"
-                  className="w-full h-full object-cover"
-                />
+                <div
+                  className="w-full h-full flex items-center justify-center font-bold text-5xl"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, oklch(0.72 0.28 285), oklch(0.62 0.28 315))",
+                    color: "white",
+                  }}
+                >
+                  SST
+                </div>
               </div>
               {/* Floating decoration */}
               <div
