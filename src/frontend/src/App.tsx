@@ -209,7 +209,7 @@ function useScrollReveal() {
           }
         }
       },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" },
+      { threshold: 0.05, rootMargin: "0px 0px -30px 0px" },
     );
 
     const elements = document.querySelectorAll(".reveal");
@@ -1219,6 +1219,10 @@ function Hackathons() {
                     src={h.image}
                     alt={h.name}
                     className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                    referrerPolicy="no-referrer"
+                    onError={(e) => {
+                      (e.target as HTMLImageElement).style.display = "none";
+                    }}
                   />
                 </div>
                 <CardContent className="p-6">
@@ -1260,6 +1264,10 @@ function Certifications() {
               <div className="w-full h-40 overflow-hidden">
                 <img
                   src={cert.image}
+                  referrerPolicy="no-referrer"
+                  onError={(e) => {
+                    (e.target as HTMLImageElement).style.display = "none";
+                  }}
                   alt={cert.name}
                   className="w-full h-full object-cover"
                 />
