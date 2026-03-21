@@ -1409,12 +1409,9 @@ function Footer() {
 
 export default function App() {
   const [loaded, setLoaded] = useState(false);
-  const [introComplete, setIntroComplete] = useState(
-    () => sessionStorage.getItem("introSeen") === "true",
-  );
+  const [introComplete, setIntroComplete] = useState(false);
 
   const handleIntroComplete = () => {
-    sessionStorage.setItem("introSeen", "true");
     setIntroComplete(true);
   };
   const [dark, setDark] = useState(true);

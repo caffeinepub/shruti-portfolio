@@ -78,7 +78,7 @@ export function CinematicIntro({ onComplete }: CinematicIntroProps) {
       "rgba(219,39,119,",
     ];
 
-    const streaks = Array.from({ length: 70 }, () => ({
+    const streaks = Array.from({ length: 40 }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       length: 80 + Math.random() * 400,
@@ -182,7 +182,15 @@ export function CinematicIntro({ onComplete }: CinematicIntroProps) {
       }, 500);
     }, 4100);
 
-    return () => timers.forEach(clearTimeout);
+    // Safety fallback: ensure portfolio always loads even if animation gets stuck
+    const safetyTimer = setTimeout(() => {
+      onCompleteRef.current();
+    }, 7000);
+
+    return () => {
+      timers.forEach(clearTimeout);
+      clearTimeout(safetyTimer);
+    };
   }, []);
 
   if (phase === "done") return null;
@@ -646,6 +654,7 @@ export function CinematicIntro({ onComplete }: CinematicIntroProps) {
             textTransform: "uppercase",
             cursor: "pointer",
             backdropFilter: "blur(8px)",
+            WebkitBackdropFilter: "blur(8px)",
             transition: "background 0.2s ease, box-shadow 0.2s ease",
           }}
           onMouseEnter={(e) => {
