@@ -340,7 +340,7 @@ function Navbar({
               <img
                 src="/assets/uploads/Screenshot-2026-03-22-055020-1.png"
                 alt="Shrutisree"
-                className="w-full h-full object-cover rounded-full"
+                className="w-full h-full object-cover object-top rounded-full"
               />
             </div>
             <span

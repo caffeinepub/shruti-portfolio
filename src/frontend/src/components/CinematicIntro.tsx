@@ -562,6 +562,7 @@ export function CinematicIntro({ onComplete }: CinematicIntroProps) {
                     width: "100%",
                     height: "100%",
                     objectFit: "cover",
+                    objectPosition: "top",
                     borderRadius: "50%",
                   }}
                 />
