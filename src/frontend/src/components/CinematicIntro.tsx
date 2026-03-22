@@ -185,7 +185,7 @@ export function CinematicIntro({ onComplete }: CinematicIntroProps) {
     // Safety fallback: ensure portfolio always loads even if animation gets stuck
     const safetyTimer = setTimeout(() => {
       onCompleteRef.current();
-    }, 7000);
+    }, 3000);
 
     return () => {
       timers.forEach(clearTimeout);

@@ -1408,7 +1408,6 @@ function Footer() {
 // ──────────────────────────────────────────────
 
 export default function App() {
-  const [loaded, setLoaded] = useState(false);
   const [introComplete, setIntroComplete] = useState(false);
 
   const handleIntroComplete = () => {
@@ -1435,15 +1434,12 @@ export default function App() {
 
   return (
     <>
-      {!loaded && <LoadingOverlay onComplete={() => setLoaded(true)} />}
       <div
         className="min-h-screen bg-background"
         style={{
           background: dark
             ? "radial-gradient(ellipse at 50% 0%, #0d1f3c 0%, #060d1f 40%, #020810 100%)"
             : undefined,
-          opacity: loaded ? 1 : 0,
-          transition: "opacity 600ms ease",
         }}
       >
         <Navbar dark={dark} toggleDark={toggleDark} />
