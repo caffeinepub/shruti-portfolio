@@ -1,11 +1,7 @@
-import { CinematicIntro } from "@/components/CinematicIntro";
 import { LoadingOverlay } from "@/components/LoadingOverlay";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Award,
   Briefcase,
@@ -199,8 +195,9 @@ const PARTICLES = [
 // HOOKS
 // ──────────────────────────────────────────────
 
-function useScrollReveal() {
+function useScrollReveal(enabled: boolean) {
   useEffect(() => {
+    if (!enabled) return;
     const observer = new IntersectionObserver(
       (entries) => {
         for (const entry of entries) {
@@ -216,7 +213,7 @@ function useScrollReveal() {
     for (const el of elements) observer.observe(el);
 
     return () => observer.disconnect();
-  }, []);
+  }, [enabled]);
 }
 
 function useActiveSection() {
@@ -1408,11 +1405,8 @@ function Footer() {
 // ──────────────────────────────────────────────
 
 export default function App() {
-  const [introComplete, setIntroComplete] = useState(false);
+  const [loadingDone, setLoadingDone] = useState(false);
 
-  const handleIntroComplete = () => {
-    setIntroComplete(true);
-  };
   const [dark, setDark] = useState(true);
 
   useEffect(() => {
@@ -1426,10 +1420,10 @@ export default function App() {
 
   const toggleDark = useCallback(() => setDark((d) => !d), []);
 
-  useScrollReveal();
+  useScrollReveal(loadingDone);
 
-  if (!introComplete) {
-    return <CinematicIntro onComplete={handleIntroComplete} />;
+  if (!loadingDone) {
+    return <LoadingOverlay onComplete={() => setLoadingDone(true)} />;
   }
 
   return (
