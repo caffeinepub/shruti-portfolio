@@ -19,7 +19,7 @@ import {
   User,
   X,
 } from "lucide-react";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 // ──────────────────────────────────────────────
 // DATA
@@ -487,6 +487,119 @@ function TypewriterSubtitle({ dark }: { dark: boolean }) {
 }
 
 function Hero({ dark }: { dark: boolean }) {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+
+    let rafId: number;
+    let spawnTimer: ReturnType<typeof setTimeout>;
+
+    const resize = () => {
+      canvas.width = canvas.offsetWidth;
+      canvas.height = canvas.offsetHeight;
+    };
+    resize();
+    window.addEventListener("resize", resize);
+
+    interface Star {
+      x: number;
+      y: number;
+      vx: number;
+      vy: number;
+      length: number;
+      opacity: number;
+      fade: number;
+      color: string;
+    }
+
+    const stars: Star[] = [];
+    const COLORS = ["255,255,255", "180,120,255", "100,220,255"];
+
+    const spawnStar = () => {
+      const edge = Math.random() < 0.6 ? "top" : "left";
+      const x =
+        edge === "top"
+          ? Math.random() * canvas.width
+          : Math.random() * canvas.width * 0.3;
+      const y =
+        edge === "top"
+          ? Math.random() * canvas.height * 0.3
+          : Math.random() * canvas.height;
+      const speed = 6 + Math.random() * 6;
+      const angle = Math.PI / 4 + (Math.random() - 0.5) * 0.4;
+      stars.push({
+        x,
+        y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed,
+        length: 80 + Math.random() * 120,
+        opacity: 1,
+        fade: 0.015 + Math.random() * 0.01,
+        color: COLORS[Math.floor(Math.random() * COLORS.length)],
+      });
+    };
+
+    const scheduleSpawn = () => {
+      spawnTimer = setTimeout(
+        () => {
+          if (stars.length < 3) spawnStar();
+          scheduleSpawn();
+        },
+        1500 + Math.random() * 1500,
+      );
+    };
+
+    spawnStar();
+    scheduleSpawn();
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      for (let i = stars.length - 1; i >= 0; i--) {
+        const s = stars[i];
+        const tailX =
+          s.x - s.vx * (s.length / Math.sqrt(s.vx * s.vx + s.vy * s.vy));
+        const tailY =
+          s.y - s.vy * (s.length / Math.sqrt(s.vx * s.vx + s.vy * s.vy));
+        const grad = ctx.createLinearGradient(tailX, tailY, s.x, s.y);
+        grad.addColorStop(0, `rgba(${s.color},0)`);
+        grad.addColorStop(1, `rgba(${s.color},${s.opacity})`);
+        ctx.beginPath();
+        ctx.moveTo(tailX, tailY);
+        ctx.lineTo(s.x, s.y);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+        // head glow
+        ctx.beginPath();
+        ctx.arc(s.x, s.y, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(${s.color},${s.opacity})`;
+        ctx.fill();
+        s.x += s.vx;
+        s.y += s.vy;
+        s.opacity -= s.fade;
+        if (
+          s.opacity <= 0 ||
+          s.x > canvas.width + 50 ||
+          s.y > canvas.height + 50
+        ) {
+          stars.splice(i, 1);
+        }
+      }
+      rafId = requestAnimationFrame(draw);
+    };
+    draw();
+
+    return () => {
+      cancelAnimationFrame(rafId);
+      clearTimeout(spawnTimer);
+      window.removeEventListener("resize", resize);
+    };
+  }, []);
+
   return (
     <section
       id="hero"
@@ -502,35 +615,44 @@ function Hero({ dark }: { dark: boolean }) {
         }}
       />
 
-      {/* Animated glow orbs */}
+      {/* Shooting stars canvas */}
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 w-full h-full pointer-events-none"
+        style={{ zIndex: -5 }}
+      />
+
+      {/* Animated gradient blobs */}
       <div className="absolute inset-0 -z-10">
         <div
-          className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-3xl opacity-25 animate-gradient orb-drift-1"
+          className="absolute top-[10%] left-[10%] w-[600px] h-[600px] rounded-full blur-[120px] orb-drift-1"
           style={{
             background:
-              "radial-gradient(circle, oklch(0.72 0.28 285 / 0.8), oklch(0.62 0.28 315 / 0.4))",
+              "radial-gradient(circle, oklch(0.72 0.28 285 / 0.35), oklch(0.62 0.28 315 / 0.15))",
           }}
         />
         <div
-          className="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full blur-3xl opacity-20 orb-drift-2"
+          className="absolute bottom-[5%] right-[8%] w-[500px] h-[500px] rounded-full blur-[100px] orb-drift-2"
           style={{
             background:
-              "radial-gradient(circle, oklch(0.55 0.25 230 / 0.5), oklch(0.45 0.22 210 / 0.2))",
-            animationDelay: "2s",
+              "radial-gradient(circle, oklch(0.55 0.25 230 / 0.3), oklch(0.45 0.22 210 / 0.1))",
+            animationDelay: "4s",
           }}
         />
         <div
-          className="absolute top-2/3 left-1/3 w-72 h-72 rounded-full blur-3xl opacity-15 orb-drift-3"
+          className="absolute top-[50%] left-[55%] w-[450px] h-[450px] rounded-full blur-[90px] orb-drift-3"
           style={{
             background:
-              "radial-gradient(circle, oklch(0.55 0.25 230 / 0.5), transparent)",
+              "radial-gradient(circle, oklch(0.62 0.28 315 / 0.28), oklch(0.72 0.28 285 / 0.1))",
+            animationDelay: "8s",
           }}
         />
         <div
-          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full blur-3xl opacity-8"
+          className="absolute top-[20%] right-[20%] w-[350px] h-[350px] rounded-full blur-[80px] orb-drift-1"
           style={{
             background:
-              "radial-gradient(circle, oklch(0.72 0.28 285 / 0.15), transparent 70%)",
+              "radial-gradient(circle, oklch(0.55 0.25 230 / 0.25), transparent 70%)",
+            animationDelay: "12s",
           }}
         />
       </div>
@@ -566,60 +688,6 @@ function Hero({ dark }: { dark: boolean }) {
       </div>
 
       <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center">
-        {/* Avatar */}
-        <div
-          className="flex justify-center mb-8 animate-slide-up"
-          style={{ animationDelay: "0.05s", opacity: 0 }}
-        >
-          <div className="relative">
-            {/* Outer glow ring */}
-            <div
-              className="absolute inset-0 rounded-full animate-pulse-ring"
-              style={{
-                background:
-                  "linear-gradient(135deg, oklch(0.72 0.28 285 / 0.5), oklch(0.62 0.28 315 / 0.3), oklch(0.55 0.25 230 / 0.2))",
-                transform: "scale(1.18)",
-                filter: "blur(8px)",
-              }}
-            />
-            {/* Spinning gradient border ring */}
-            <div
-              className="absolute -inset-1.5 rounded-full animate-spin-slow"
-              style={{
-                background:
-                  "conic-gradient(from 0deg, oklch(0.72 0.28 285), oklch(0.55 0.25 230), oklch(0.62 0.28 315), oklch(0.72 0.28 285))",
-                padding: "2px",
-              }}
-            />
-            {/* Avatar image */}
-            <div
-              className="relative w-36 h-36 sm:w-44 sm:h-44 rounded-full overflow-hidden"
-              style={{
-                boxShadow:
-                  "0 0 0 3px oklch(0.72 0.28 285 / 0.6), 0 0 40px oklch(0.72 0.28 285 / 0.35), 0 0 80px oklch(0.62 0.28 315 / 0.2)",
-              }}
-            >
-              <img
-                src="/assets/uploads/Screenshot-2026-03-22-055020-1.png"
-                alt="Shrutisree"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            {/* Sparkle decoration */}
-            <div
-              className="absolute -top-2 -right-2 w-8 h-8 rounded-full flex items-center justify-center text-sm animate-float"
-              style={{
-                background:
-                  "linear-gradient(135deg, oklch(0.72 0.28 285), oklch(0.62 0.28 315))",
-                boxShadow: "0 0 14px oklch(0.72 0.28 285 / 0.6)",
-                animationDelay: "0.5s",
-              }}
-            >
-              ✨
-            </div>
-          </div>
-        </div>
-
         {/* Welcome badge */}
         <div
           className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full mb-8 animate-slide-up"
@@ -732,45 +800,9 @@ function About() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <SectionHeading icon={<User className="w-5 h-5" />} label="About Me" />
 
-        <div className="grid lg:grid-cols-5 gap-16 items-center mt-16">
-          {/* Avatar */}
-          <div className="lg:col-span-2 flex justify-center reveal">
-            <div className="relative">
-              <div
-                className="w-64 h-64 sm:w-72 sm:h-72 rounded-3xl grad-border overflow-hidden"
-                style={{
-                  boxShadow:
-                    "0 0 40px oklch(0.72 0.28 285 / 0.2), 0 0 80px oklch(0.62 0.28 315 / 0.1)",
-                }}
-              >
-                <img
-                  src="/assets/uploads/Screenshot-2026-03-22-055020-1.png"
-                  alt="Shrutisree"
-                  className="w-full h-full object-cover"
-                />
-              </div>
-              {/* Floating decoration */}
-              <div
-                className="absolute -top-4 -right-4 w-16 h-16 rounded-2xl flex items-center justify-center text-2xl animate-float shadow-glow"
-                style={{
-                  background:
-                    "linear-gradient(135deg, oklch(0.72 0.28 285), oklch(0.62 0.28 315))",
-                  animationDelay: "1s",
-                }}
-              >
-                ✨
-              </div>
-              <div
-                className="absolute -bottom-4 -left-4 w-14 h-14 rounded-2xl flex items-center justify-center text-xl animate-float border border-primary/30 bg-card"
-                style={{ animationDelay: "2s" }}
-              >
-                🚀
-              </div>
-            </div>
-          </div>
-
+        <div className="mt-16">
           {/* Text */}
-          <div className="lg:col-span-3 space-y-6">
+          <div className="max-w-3xl mx-auto space-y-6">
             <p className="text-lg leading-relaxed text-muted-foreground reveal reveal-delay-1">
               Hey! I'm{" "}
               <span className="text-foreground font-semibold">Shruti</span> — a
