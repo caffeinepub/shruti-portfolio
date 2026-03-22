@@ -332,15 +332,16 @@ function Navbar({
         >
           <div className="relative">
             <div
-              className="w-9 h-9 rounded-full ring-2 ring-primary/50 group-hover:ring-primary transition-all duration-300 flex items-center justify-center font-bold text-xs"
+              className="w-9 h-9 rounded-full ring-2 ring-primary/50 group-hover:ring-primary transition-all duration-300 overflow-hidden"
               style={{
                 boxShadow: "0 0 12px oklch(0.72 0.28 285 / 0.4)",
-                background:
-                  "linear-gradient(135deg, oklch(0.72 0.28 285), oklch(0.62 0.28 315))",
-                color: "white",
               }}
             >
-              SST
+              <img
+                src="/assets/uploads/Screenshot-2026-03-22-055020-1.png"
+                alt="Shrutisree"
+                className="w-full h-full object-cover rounded-full"
+              />
             </div>
             <span
               className="absolute -bottom-0.5 -right-0.5 w-3 h-3 rounded-full border-2 border-background animate-pulse"
@@ -598,16 +599,11 @@ function Hero({ dark }: { dark: boolean }) {
                   "0 0 0 3px oklch(0.72 0.28 285 / 0.6), 0 0 40px oklch(0.72 0.28 285 / 0.35), 0 0 80px oklch(0.62 0.28 315 / 0.2)",
               }}
             >
-              <div
-                className="w-full h-full flex items-center justify-center font-bold text-5xl"
-                style={{
-                  background:
-                    "linear-gradient(135deg, oklch(0.72 0.28 285), oklch(0.62 0.28 315))",
-                  color: "white",
-                }}
-              >
-                SST
-              </div>
+              <img
+                src="/assets/uploads/Screenshot-2026-03-22-055020-1.png"
+                alt="Shrutisree"
+                className="w-full h-full object-cover"
+              />
             </div>
             {/* Sparkle decoration */}
             <div
@@ -747,16 +743,11 @@ function About() {
                     "0 0 40px oklch(0.72 0.28 285 / 0.2), 0 0 80px oklch(0.62 0.28 315 / 0.1)",
                 }}
               >
-                <div
-                  className="w-full h-full flex items-center justify-center font-bold text-5xl"
-                  style={{
-                    background:
-                      "linear-gradient(135deg, oklch(0.72 0.28 285), oklch(0.62 0.28 315))",
-                    color: "white",
-                  }}
-                >
-                  SST
-                </div>
+                <img
+                  src="/assets/uploads/Screenshot-2026-03-22-055020-1.png"
+                  alt="Shrutisree"
+                  className="w-full h-full object-cover"
+                />
               </div>
               {/* Floating decoration */}
               <div

@@ -553,12 +553,18 @@ export function CinematicIntro({ onComplete }: CinematicIntroProps) {
                   justifyContent: "center",
                   background:
                     "linear-gradient(135deg, oklch(0.72 0.28 285), oklch(0.62 0.28 315))",
-                  color: "white",
-                  fontWeight: "bold",
-                  fontSize: "2.5rem",
                 }}
               >
-                SST
+                <img
+                  src="/assets/uploads/Screenshot-2026-03-22-055020-1.png"
+                  alt="Shrutisree"
+                  style={{
+                    width: "100%",
+                    height: "100%",
+                    objectFit: "cover",
+                    borderRadius: "50%",
+                  }}
+                />
               </div>
             </div>
             {/* Ripple rings for snap */}
