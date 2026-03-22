@@ -316,12 +316,38 @@ function Navbar({
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 overflow-hidden ${
         scrolled
           ? "bg-background/80 backdrop-blur-xl border-b border-border shadow-glow-sm"
           : "bg-transparent"
       }`}
     >
+      {/* Header animated gradient blobs */}
+      <div className="absolute inset-0 pointer-events-none -z-10">
+        <div
+          className="absolute -top-8 left-[5%] w-64 h-32 rounded-full blur-[60px] orb-drift-1 opacity-60"
+          style={{
+            background:
+              "radial-gradient(circle, oklch(0.72 0.28 285 / 0.45), transparent 70%)",
+          }}
+        />
+        <div
+          className="absolute -top-6 right-[10%] w-48 h-28 rounded-full blur-[50px] orb-drift-2 opacity-50"
+          style={{
+            background:
+              "radial-gradient(circle, oklch(0.62 0.28 315 / 0.4), transparent 70%)",
+            animationDelay: "3s",
+          }}
+        />
+        <div
+          className="absolute top-0 left-[45%] w-40 h-24 rounded-full blur-[45px] orb-drift-3 opacity-40"
+          style={{
+            background:
+              "radial-gradient(circle, oklch(0.55 0.25 230 / 0.35), transparent 70%)",
+            animationDelay: "6s",
+          }}
+        />
+      </div>
       <nav className="max-w-7xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
         {/* Logo — avatar image */}
         <button
